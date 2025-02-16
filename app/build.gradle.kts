@@ -83,7 +83,7 @@ dependencies {
     implementation(libs.coil.compose)
     //video player
     implementation (libs.core)
-    //navgation
+    //Navigation
     implementation(libs.androidx.navigation.compose)
 
     //dagger-hilt
