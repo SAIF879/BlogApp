@@ -1,7 +1,9 @@
 package com.example.blogapp.di
 
+import com.example.blogapp.data.repo.HomeRepositoryImpl
 import com.example.blogapp.data.source.remote.ApiService
 import com.example.blogapp.data.util.OkHttpClientHelper
+import com.example.blogapp.domain.repo.HomeRepository
 import com.pierfrancescosoffritti.androidyoutubeplayer.BuildConfig
 import dagger.Module
 import dagger.Provides
@@ -29,6 +31,13 @@ object AppModule {
             .create(ApiService::class.java)
     }
 
+
+
+    @Singleton
+    @Provides
+    fun providesGetBlogRepository(apiServices: ApiService): HomeRepository {
+        return HomeRepositoryImpl(apiServices)
+    }
 
 
 }
