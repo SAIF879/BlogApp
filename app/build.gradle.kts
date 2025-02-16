@@ -43,6 +43,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -84,8 +85,7 @@ dependencies {
     releaseImplementation (libs.library.no.op)
     //coil
     implementation(libs.coil.compose)
-    //video player
-    implementation (libs.core)
+
     //Navigation
     implementation(libs.androidx.navigation.compose)
 
