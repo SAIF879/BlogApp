@@ -3,10 +3,12 @@ package com.example.blogapp.presentation.ui.screens.homeScreen
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -30,7 +32,7 @@ fun HomeScreen(blogList: ApiResult<List<BlogData>>) {
                 title = { Text(text = "Blog List") }
             )
         },
-        content = {
+        content = {paddingValues->
             when (blogList) {
                 ApiResult.Loading -> {
                     Column(
@@ -47,16 +49,17 @@ fun HomeScreen(blogList: ApiResult<List<BlogData>>) {
                 }
 
                 is ApiResult.Success -> {
-                        LazyColumn(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(Color.Black)
-                        ) {
-                            blogList.data?.run {
-                            items(items = this) { item ->
-                                BlogItem(onClick = {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Color.Black)
+                            .padding(paddingValues)
+                    ) {
+                        blogList.data?.run {
+                            itemsIndexed(this) { index, item ->
+                                BlogItem(index = index, item = item) {
 
-                                }, item = item)
+                                }
                             }
                         }
                     }
@@ -64,7 +67,24 @@ fun HomeScreen(blogList: ApiResult<List<BlogData>>) {
 
 
                 is ApiResult.Error -> {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Color.Black)
+                            ,
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
 
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(paddingValues), contentAlignment = Alignment.Center
+                        ) {
+                            Text(text = "Error: ${blogList.message}")
+                        }
+
+                    }
                 }
 
 
