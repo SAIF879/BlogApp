@@ -25,7 +25,7 @@ import com.example.blogapp.presentation.ui.components.BlogItem
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HomeScreen(blogList: ApiResult<List<BlogData>>) {
+fun HomeScreen(blogList: ApiResult<List<BlogData>>, homeScreenEvents: (HomeScreenEvents)->Unit) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -58,7 +58,7 @@ fun HomeScreen(blogList: ApiResult<List<BlogData>>) {
                         blogList.data?.run {
                             itemsIndexed(this) { index, item ->
                                 BlogItem(index = index, item = item) {
-
+                                       homeScreenEvents.invoke(HomeScreenEvents.OnNavigate(item.link))
                                 }
                             }
                         }
