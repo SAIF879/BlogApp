@@ -19,7 +19,7 @@ object AppModule {
     @Singleton
     @Provides
     fun provideAnimeApi(): ApiService {
-        val BASE_URL = ""
+        val BASE_URL = "https://blog.vrid.in/wp-json/wp/"
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(OkHttpClientHelper().getOkHttpClient())
